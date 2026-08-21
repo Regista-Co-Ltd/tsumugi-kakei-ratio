@@ -1,0 +1,35 @@
+/* User-approved precision refinements: preserve the 暮らしのノート visual system. */
+.result-board {
+  background: #fffdf8;
+}
+
+.chart-panel::after {
+  content: none;
+  display: none;
+}
+
+.about {
+  gap: clamp(35px, 8vw, 95px);
+}
+
+.about__copy h2 {
+  font-size: clamp(28px, 3.4vw, 45px);
+}
+
+.hero {
+  gap: 28px;
+}
+
+.hero__copy h1 {
+  font-size: clamp(31px, 4.2vw, 58px);
+}
+
+@media (max-width: 800px) {
+  .hero__copy h1 {
+    font-size: clamp(31px, 9vw, 47px);
+  }
+
+  .about__copy h2 {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+}
