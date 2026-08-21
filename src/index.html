@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="毎月の手取り収入から、家計の黄金比をやさしくシミュレーションできる家計バランス診断です。" />
+    <title>わが家の家計バランス診断</title>
+    <link rel="icon" href="assets/images/kakei-logo.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="assets/js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header layout-width">
+        <a class="brand" href="#top" aria-label="わが家の家計バランス診断の先頭へ">
+          <img src="assets/images/kakei-logo.webp" alt="" width="36" height="36" />
+          <span>わが家の<br />家計バランス診断</span>
+        </a>
+        <nav aria-label="ページ内ナビゲーション">
+          <a href="#simulator">診断する</a>
+          <a href="#about">黄金比について</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero layout-width" aria-labelledby="hero-title">
+          <div class="hero__copy">
+            <p class="eyebrow">家計をやさしく見える化</p>
+            <h1 id="hero-title">今月の手取りから、<br /><em>わが家のちょうどいい</em>を<br />見つけよう。</h1>
+            <p>金額を入れるだけで、費目ごとの目安がひと目でわかります。家族の暮らしに合う、無理のない配分を考えるきっかけに。</p>
+            <a class="underlined-link" href="#simulator">さっそく診断してみる <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero__visual" aria-hidden="true">
+            <img src="assets/images/kakei-hero-notebook.webp" alt="" width="1600" height="900" />
+            <div class="mini-ledger"><span>01</span><p>今月の手取り</p><strong>¥ 300,000</strong><div><i></i>バランスを診断</div></div>
+            <div class="memo">暮らしのお金を<br /><b>やさしく整える</b></div>
+          </div>
+        </section>
+
+        <section class="simulator layout-narrow" id="simulator" aria-labelledby="simulator-title">
+          <div class="section-head">
+            <p class="section-label">01. SIMULATE</p>
+            <h2 id="simulator-title">手取り収入を入れてみよう</h2>
+            <p>ボーナスを除いた、毎月の世帯手取り収入を入力してください。</p>
+          </div>
+          <div class="calculator-note">
+            <span class="paper-tab">家計ノート</span>
+            <span class="calculator-icon" aria-hidden="true">¥</span>
+            <label for="income">毎月の手取り収入</label>
+            <div class="income-control">
+              <span>¥</span>
+              <input id="income" name="income" type="text" value="300000" inputmode="numeric" pattern="[0-9]*" aria-describedby="income-help" />
+              <b>円</b>
+            </div>
+            <p id="income-help" class="helper-text">例：300,000円　半角数字で入力</p>
+            <div class="calculator-actions">
+              <button class="primary-button" id="calculate" type="button">この収入で診断する <span aria-hidden="true">→</span></button>
+              <button class="text-button" id="reset" type="button">↻ 30万円に戻す</button>
+            </div>
+            <p class="error-message" id="income-error" hidden>1円以上の金額を入力してください。</p>
+          </div>
+          <p class="disclaimer">ⓘ　ここでの配分は、家計を見直すための一般的な目安です。住居費や教育費などは、ご家族の状況に合わせて調整してください。</p>
+        </section>
+
+        <section class="results" id="result" aria-labelledby="result-title">
+          <div class="layout-wide">
+            <div class="results__head">
+              <div><p class="section-label">02. YOUR BALANCE</p><h2 id="result-title"><span id="result-income-title">300,000円</span>の場合の目安 <img src="assets/images/kakei-logo.webp" alt="" width="30" height="30" /></h2></div>
+              <p class="result-status" id="result-status" aria-live="polite">お金の行き先を確認してみましょう。</p>
+            </div>
+            <div class="result-board">
+              <div class="chart-panel">
+                <div class="donut" id="donut" role="img" aria-label="費目別の家計配分を示す円グラフ"><div><span>月の手取り</span><strong id="result-income">¥300,000</strong></div></div>
+                <p>全部で100%。毎月のお金の居場所を、<br />無理のないバランスで考えます。</p>
+              </div>
+              <div class="budget-list" id="budget-list" aria-label="費目別の目安金額"></div>
+            </div>
+            <aside class="saving-tip"><div aria-hidden="true">♧</div><p><b>暮らしのメモ</b><strong>まずは「貯蓄・投資」を先に取り分けるのがおすすめです。</strong><span>残ったお金でやりくりするのではなく、将来のためのお金を最初に確保すると、毎月の積み立てを続けやすくなります。</span></p></aside>
+          </div>
+        </section>
+
+        <section class="about layout-narrow" id="about" aria-labelledby="about-title">
+          <div class="about__art"><img src="assets/images/kakei-balance-illustration.webp" alt="家計バランスをイメージしたモビールのイラスト" width="1100" height="733" /></div>
+          <div class="about__copy"><span class="paper-tab paper-tab--green">暮らしのメモ</span><p class="section-label">03. ABOUT THE RATIO</p><h2 id="about-title">黄金比は、<br /><em>正解</em>ではなく<br />暮らしを整えるヒント。</h2><p>家賃の高さ、子どもの年齢、働き方によって、家計にぴったりの配分は変わります。このシミュレーションは「今の支出をどこから見直そう？」と考えるための、やさしい出発点です。</p><div class="about-points"><span>● 固定費を確かめる</span><span>● 使いすぎに気づく</span><span>● 未来のお金を育てる</span></div></div>
+        </section>
+
+        <section class="instagram-section" aria-labelledby="instagram-title">
+          <div class="instagram-card">
+            <div class="instagram-avatar"><img src="assets/images/tsumugi-kurashi-money-icon.webp" alt="つむぎの家計アイコン" width="650" height="650" /></div>
+            <div><p class="section-label">INSTAGRAM</p><h2 id="instagram-title">家計のヒントを、<br /><em>Instagramでも。</em></h2><p>無理なく続く家計管理のコツや、暮らしに寄り添うお金の話を発信しています。</p><a href="https://www.instagram.com/tsumugi_kurashi_money/" target="_blank" rel="noopener noreferrer">@tsumugi_kurashi_money <span aria-hidden="true">↗</span></a></div>
+            <span class="follow-label">FOLLOW ME</span>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer"><div class="layout-wide"><div class="brand"><img src="assets/images/kakei-logo.webp" alt="" width="31" height="31" /><span>わが家の家計バランス診断</span></div><p>このシミュレーションは家計管理の目安です。実際のご状況に合わせてご活用ください。</p></div></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "kakei-golden-ratio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Netlify-ready static household budget ratio simulator",
+  "scripts": {
+    "compress:images": "python3 scripts/compress_images.py",
+    "build": "rm -rf dist && mkdir -p dist/assets/css dist/assets/js dist/assets/images && sass src/scss/main.scss dist/assets/css/main.css --style=compressed --no-source-map && cp src/index.html dist/index.html && cp src/js/app.js dist/assets/js/app.js && cp -R src/assets/. dist/assets/",
+    "prepare:deploy": "npm run compress:images && npm run build",
+    "preview": "node scripts/preview.mjs"
+  },
+  "devDependencies": {
+    "sass": "^1.90.0"
+  }
+}
