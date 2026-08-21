@@ -31,6 +31,12 @@
     return segments;
   }, []).join(", ");
 
+  function allocateAmounts(income) {
+    const roundedAmounts = rules.slice(0, -1).map((rule) => Math.round(income * rule.ratio / 100));
+    const allocatedTotal = roundedAmounts.reduce((total, amount) => total + amount, 0);
+    return [...roundedAmounts, income - allocatedTotal];
+  }
+
   function createRow(rule, amount) {
     const row = document.createElement("article");
     row.className = "budget-row";
@@ -48,7 +54,8 @@
     donut.style.background = `conic-gradient(${chartGradient})`;
     resultIncome.textContent = `¥${yen.format(income)}`;
     resultIncomeTitle.textContent = `${yen.format(income)}円`;
-    list.replaceChildren(...rules.map((rule) => createRow(rule, income * rule.ratio / 100)));
+    const amounts = allocateAmounts(income);
+    list.replaceChildren(...rules.map((rule, index) => createRow(rule, amounts[index])));
     resultStatus.textContent = "計算しました。お金の行き先を確認してみましょう。";
     resultStatus.classList.add("is-active");
 
