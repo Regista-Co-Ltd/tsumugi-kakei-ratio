@@ -16,11 +16,31 @@
   ];
 
   const householdProfiles = {
-    single: { label: "一人暮らし", ratios: [30, 15, 6, 6, 5, 4, 2, 7, 10, 15] },
-    couple: { label: "二人暮らし", ratios: [28, 15, 6, 5, 6, 4, 2, 5, 8, 21] },
-    "family-young": { label: "子育て世帯（小学生以下）", ratios: [25, 16, 6, 5, 6, 4, 8, 4, 4, 22] },
-    "family-school": { label: "子育て世帯（中高生以上）", ratios: [25, 16, 6, 5, 7, 4, 13, 4, 3, 17] },
-    "multi-generation": { label: "実家暮らし・二世帯", ratios: [22, 18, 8, 5, 8, 5, 6, 5, 3, 20] }
+    single: {
+      label: "ひとりで暮らす",
+      hint: "住まいと日々の楽しみに配慮した、ひとり暮らしの目安です。",
+      ratios: [30, 15, 6, 6, 5, 4, 2, 7, 10, 15]
+    },
+    couple: {
+      label: "ふたりで暮らす",
+      hint: "住居費や食費を分け合う、ふたり暮らしの目安です。",
+      ratios: [28, 15, 6, 5, 6, 4, 2, 5, 8, 21]
+    },
+    "family-young": {
+      label: "子どもと暮らす｜未就学〜小学生",
+      hint: "保育・習い事など、これからの学びも見据えた目安です。",
+      ratios: [25, 16, 6, 5, 6, 4, 8, 4, 4, 22]
+    },
+    "family-school": {
+      label: "子どもと暮らす｜中学生以降",
+      hint: "教育費が増える時期も考えた、子育て期の目安です。",
+      ratios: [25, 16, 6, 5, 7, 4, 13, 4, 3, 17]
+    },
+    "multi-generation": {
+      label: "親世代と暮らす",
+      hint: "実家・二世帯など、家族で支え合う暮らしの目安です。",
+      ratios: [22, 18, 8, 5, 8, 5, 6, 5, 3, 20]
+    }
   };
 
   const yen = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 0 });
@@ -32,6 +52,7 @@
   const resultIncomeTitle = document.querySelector("#result-income-title");
   const error = document.querySelector("#income-error");
   const resultStatus = document.querySelector("#result-status");
+  const householdNote = document.querySelector("#household-note");
 
   const incomeValue = () => Number(String(input.value).replace(/[^0-9]/g, "")) || 0;
   const activeProfile = () => householdProfiles[household.value] || householdProfiles["family-young"];
@@ -65,12 +86,13 @@
     input.value = String(income);
     const rules = activeRules();
     const profile = activeProfile();
+    if (householdNote) householdNote.textContent = profile.hint;
     donut.style.background = `conic-gradient(${chartGradient(rules)})`;
     resultIncome.textContent = `¥${yen.format(income)}`;
     resultIncomeTitle.textContent = `${yen.format(income)}円`;
     const amounts = allocateAmounts(income, rules);
     list.replaceChildren(...rules.map((rule, index) => createRow(rule, amounts[index])));
-    resultStatus.textContent = `${profile.label}の目安で計算しました。お金の行き先を確認してみましょう。`;
+    resultStatus.textContent = `${profile.label}場合の目安で計算しました。お金の行き先を確認してみましょう。`;
     resultStatus.classList.add("is-active");
 
     if (scroll) document.querySelector("#result").scrollIntoView({ behavior: "smooth", block: "start" });

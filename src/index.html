@@ -53,17 +53,18 @@
             <span class="calculator-icon" aria-hidden="true">¥</span>
             <div class="calculator-fields">
               <div class="field-group">
-                <label for="household">世帯状況</label>
+                <label for="household">いまの暮らしに近いもの</label>
                 <div class="select-control">
-                  <select id="household" name="household" aria-describedby="household-help">
-                    <option value="single">一人暮らし（独身）</option>
-                    <option value="couple">二人暮らし（夫婦・カップル）</option>
-                    <option value="family-young" selected>子育て世帯（小学生以下）</option>
-                    <option value="family-school">子育て世帯（中高生以上）</option>
-                    <option value="multi-generation">実家暮らし・二世帯</option>
+                  <select id="household" name="household" aria-describedby="household-help household-note">
+                    <option value="single">ひとりで暮らす</option>
+                    <option value="couple">ふたりで暮らす</option>
+                    <option value="family-young" selected>子どもと暮らす｜未就学〜小学生</option>
+                    <option value="family-school">子どもと暮らす｜中学生以降</option>
+                    <option value="multi-generation">親世代と暮らす</option>
                   </select>
                 </div>
-                <p id="household-help" class="helper-text">世帯状況に合う目安へ切り替えます</p>
+                <p id="household-help" class="helper-text">迷ったら、いま一番近い暮らしを選んでください。</p>
+                <p id="household-note" class="household-note" aria-live="polite"></p>
               </div>
               <div class="field-group">
                 <label for="income">毎月の手取り収入</label>
@@ -81,7 +82,7 @@
             </div>
             <p class="error-message" id="income-error" hidden>1円以上の金額を入力してください。</p>
           </div>
-          <p class="disclaimer">ⓘ　ここでの配分は、世帯状況ごとの一般的な目安です。住居費や教育費などは、ご家族の状況に合わせて調整してください。</p>
+          <p class="disclaimer">ⓘ　ここでの配分は、選んだ暮らしに合わせた一般的な目安です。住居費や教育費などは、ご自身の状況に合わせて調整してください。</p>
         </section>
 
         <section class="results" id="result" aria-labelledby="result-title">

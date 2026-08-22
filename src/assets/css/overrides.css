@@ -42,3 +42,14 @@
     white-space: nowrap;
   }
 }
+
+/* 暮らしのスタイル選択: 選択の意味を言葉で補い、迷いを減らす。 */
+.household-note {
+  margin: 10px 0 0;
+  padding: 9px 11px;
+  border-left: 3px solid #d97161;
+  background: #fff6ed;
+  color: #5f554d;
+  font-size: 12px;
+  line-height: 1.65;
+}
