@@ -200,7 +200,9 @@
   }
 
   .field-heading {
+    flex-wrap: nowrap;
     gap: 7px;
+    min-width: 0;
   }
 
   .field-step {
@@ -211,8 +213,12 @@
   }
 
   .calculator-note .field-heading label {
-    font-size: 15px;
+    min-width: 0;
+    overflow: hidden;
+    font-size: clamp(13px, 4.1vw, 15px);
     line-height: 1.45;
+    text-overflow: clip;
+    white-space: nowrap;
   }
 
   .field-lead {
