@@ -30,6 +30,15 @@
   }
 
   .about__copy h2 {
-    font-size: clamp(28px, 8vw, 42px);
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 440px) {
+  .hero__copy h1 em {
+    display: inline-block;
+    font-size: 0.88em;
+    letter-spacing: -0.035em;
+    white-space: nowrap;
   }
 }
