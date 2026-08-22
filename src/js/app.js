@@ -18,28 +18,48 @@
   const householdProfiles = {
     single: {
       label: "ひとりで暮らす",
-      hint: "住まいと日々の楽しみに配慮した、ひとり暮らしの目安です。",
-      ratios: [30, 15, 6, 6, 5, 4, 2, 7, 10, 15]
+      hint: "住まい・食事・自分時間を大切にしながら、先取りも続ける目安です。",
+      summary: "住居費と日々の楽しみを確保しながら、先取り貯蓄を続ける配分です。",
+      tipTitle: "今月の整えポイント",
+      tipMessage: "住居費が手取りの3割を超えるなら、通信費や定額サービスも一緒に見直してみて。",
+      tipDetail: "貯蓄・投資は16%を目安に。収入が増えた月は、その一部を先取りへ回すと続けやすくなります。",
+      ratios: [28, 17, 6, 5, 5, 4, 2, 7, 10, 16]
     },
     couple: {
       label: "ふたりで暮らす",
-      hint: "住居費や食費を分け合う、ふたり暮らしの目安です。",
-      ratios: [28, 15, 6, 5, 6, 4, 2, 5, 8, 21]
+      hint: "共通の生活費と、それぞれの楽しみを無理なく両立する目安です。",
+      summary: "共通の暮らし費を抑え、ふたりの将来に向けた積み立てを少し厚めにする配分です。",
+      tipTitle: "ふたりの家計メモ",
+      tipMessage: "共有する費用と、それぞれが自由に使うお金を分けると、話し合いがぐっと楽になります。",
+      tipDetail: "貯蓄・投資は22%を目安に。目的別に口座や積立を分けると、続けやすくなります。",
+      ratios: [26, 16, 6, 5, 6, 4, 2, 5, 8, 22]
     },
     "family-young": {
       label: "子どもと暮らす｜未就学〜小学生",
-      hint: "保育・習い事など、これからの学びも見据えた目安です。",
-      ratios: [25, 16, 6, 5, 6, 4, 8, 4, 4, 22]
+      hint: "食費・日用品と、保育や学びの準備を両立する目安です。",
+      summary: "日々の生活費と、これからの学びの準備を両立しながら先取りを続ける配分です。",
+      tipTitle: "子育て期の家計メモ",
+      tipMessage: "教育費は「今月使う分」と「これからのために積む分」を分けて考えるのがおすすめです。",
+      tipDetail: "貯蓄・投資は21%を目安に。季節行事や習い事の費用は、年単位でも見通しを立ててみてください。",
+      ratios: [25, 16, 6, 5, 6, 6, 7, 4, 4, 21]
     },
     "family-school": {
       label: "子どもと暮らす｜中学生以降",
-      hint: "教育費が増える時期も考えた、子育て期の目安です。",
-      ratios: [25, 16, 6, 5, 7, 4, 13, 4, 3, 17]
+      hint: "教育・通学にかかる費用を厚めに見込み、固定費を守る目安です。",
+      summary: "教育費を厚めに確保しながら、固定費と将来の積み立てを守る配分です。",
+      tipTitle: "学びに備える家計メモ",
+      tipMessage: "教材・塾・通学などは、毎月分だけでなく年間額も確認すると安心です。",
+      tipDetail: "教育費は16%を目安に。臨時出費に備え、貯蓄・投資も細く長く続けましょう。",
+      ratios: [24, 15, 6, 5, 7, 4, 16, 4, 3, 16]
     },
     "multi-generation": {
       label: "親世代と暮らす",
-      hint: "実家・二世帯など、家族で支え合う暮らしの目安です。",
-      ratios: [22, 18, 8, 5, 8, 5, 6, 5, 3, 20]
+      hint: "共有の食費・光熱費と、それぞれの将来費用を見える化する目安です。",
+      summary: "住居費を抑えながら、共有の食費・光熱費・保険を丁寧に見える化する配分です。",
+      tipTitle: "共有する暮らしのメモ",
+      tipMessage: "食費・光熱費・住居の修繕費など、誰がどこまで負担するかを言葉にしておくと安心です。",
+      tipDetail: "貯蓄・投資は23%を目安に。共有費と個人のためのお金を分けて管理してみてください。",
+      ratios: [18, 18, 8, 5, 9, 6, 5, 5, 3, 23]
     }
   };
 
@@ -53,6 +73,9 @@
   const error = document.querySelector("#income-error");
   const resultStatus = document.querySelector("#result-status");
   const householdNote = document.querySelector("#household-note");
+  const tipTitle = document.querySelector("#tip-title");
+  const tipMessage = document.querySelector("#tip-message");
+  const tipDetail = document.querySelector("#tip-detail");
 
   const incomeValue = () => Number(String(input.value).replace(/[^0-9]/g, "")) || 0;
   const activeProfile = () => householdProfiles[household.value] || householdProfiles["family-young"];
@@ -87,12 +110,15 @@
     const rules = activeRules();
     const profile = activeProfile();
     if (householdNote) householdNote.textContent = profile.hint;
+    if (tipTitle) tipTitle.textContent = profile.tipTitle;
+    if (tipMessage) tipMessage.textContent = profile.tipMessage;
+    if (tipDetail) tipDetail.textContent = profile.tipDetail;
     donut.style.background = `conic-gradient(${chartGradient(rules)})`;
     resultIncome.textContent = `¥${yen.format(income)}`;
     resultIncomeTitle.textContent = `${yen.format(income)}円`;
     const amounts = allocateAmounts(income, rules);
     list.replaceChildren(...rules.map((rule, index) => createRow(rule, amounts[index])));
-    resultStatus.textContent = `${profile.label}場合の目安で計算しました。お金の行き先を確認してみましょう。`;
+    resultStatus.textContent = profile.summary;
     resultStatus.classList.add("is-active");
 
     if (scroll) document.querySelector("#result").scrollIntoView({ behavior: "smooth", block: "start" });
