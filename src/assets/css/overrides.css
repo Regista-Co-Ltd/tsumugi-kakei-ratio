@@ -170,13 +170,108 @@
 }
 
 @media (max-width: 800px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .calculator-note {
+    padding: 34px 18px 24px;
+  }
+
   .calculator-flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
     margin-bottom: 19px;
     padding-right: 43px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .calculator-flow span {
+    flex: 0 0 auto;
+    margin-right: 0;
+    font-size: 9px;
+  }
+
+  .calculator-fields {
+    gap: 18px;
+  }
+
+  .field-heading {
+    gap: 7px;
+  }
+
+  .field-step {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .calculator-note .field-heading label {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .field-lead {
+    margin: 4px 0 8px;
+    font-size: 10px;
+    line-height: 1.55;
   }
 
   .field-group--household .select-control,
   .field-group--income .income-control {
-    padding: 7px 10px 6px;
+    padding: 6px 10px 5px;
+  }
+
+  .field-group--household .select-control select {
+    min-height: 36px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .field-group--income .income-control input {
+    font-size: clamp(27px, 8vw, 34px);
+    line-height: 1.25;
+  }
+
+  .field-group--income .income-control > span {
+    padding-right: 7px;
+    font-size: 20px;
+  }
+
+  .field-group--income .income-control > b {
+    padding-left: 6px;
+    font-size: 14px;
+  }
+
+  .field-group--household .helper-text,
+  .field-group--income .helper-text,
+  .household-note {
+    font-size: 10px;
+    line-height: 1.65;
+  }
+
+  .calculator-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 21px;
+  }
+
+  .calculator-actions .primary-button {
+    width: 100%;
+    min-height: 50px;
+    font-size: 14px;
+  }
+
+  .calculator-actions .text-button {
+    justify-self: center;
+    padding: 7px 11px;
+    font-size: 11px;
   }
 }
