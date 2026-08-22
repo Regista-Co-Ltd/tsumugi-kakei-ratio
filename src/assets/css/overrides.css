@@ -53,3 +53,36 @@
   font-size: 12px;
   line-height: 1.65;
 }
+
+/* 配分の根拠: 統計を参考にした一般的な目安であることを明確にする。 */
+.evidence-note {
+  display: grid;
+  gap: 7px;
+  max-width: 760px;
+  margin: 30px auto 0;
+  padding: 16px 18px;
+  border: 1px solid #e8dccd;
+  border-left: 4px solid #c7a566;
+  background: #fffdf8;
+  color: #62564d;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.evidence-note b {
+  color: #815b49;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.evidence-note a {
+  width: fit-content;
+  color: #8a604b;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.evidence-note a:hover {
+  color: #b86151;
+}
