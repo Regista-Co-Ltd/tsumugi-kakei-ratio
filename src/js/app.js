@@ -4,7 +4,7 @@
 
   const baseRules = [
     { label: "住居費", detail: "家賃・住宅ローン", color: "#d97161", icon: "⌂" },
-    { label: "食費", detail: "食材・外食", color: "#e7a85a", icon: "♨" },
+    { label: "食費", detail: "食材・外食", color: "#e7a85a", icon: "🍚" },
     { label: "水道光熱費", detail: "電気・ガス・水道", color: "#91b8c3", icon: "☼" },
     { label: "通信費", detail: "スマホ・ネット", color: "#8ca59b", icon: "▥" },
     { label: "保険", detail: "医療・生命・損害", color: "#a99abc", icon: "♡" },
