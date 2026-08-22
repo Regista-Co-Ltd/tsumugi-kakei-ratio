@@ -86,3 +86,97 @@
 .evidence-note a:hover {
   color: #b86151;
 }
+
+/* 入力の役割を明確にし、選択と金額入力を2ステップとして見せる。 */
+.calculator-flow {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 22px;
+  padding-right: 62px;
+  color: #69736b;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.calculator-flow span {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 2px 7px;
+  background: #e8f0e9;
+  color: #557466;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.field-heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calculator-note .field-heading label {
+  margin: 0;
+}
+
+.field-step {
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #ec8d7d;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.field-lead {
+  position: relative;
+  z-index: 1;
+  margin: 6px 0 10px;
+  color: #8a9189;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.field-group--household .select-control,
+.field-group--income .income-control {
+  padding: 6px 11px 5px;
+  border: 1px solid #e6ddd0;
+  border-bottom: 2px solid #8ca59b;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.field-group--household .select-control {
+  background: #f7fbf6;
+}
+
+.field-group--income .income-control {
+  background: #fff8f1;
+}
+
+.field-group--household .select-control select {
+  padding-top: 5px;
+  padding-bottom: 6px;
+}
+
+.field-group--income .income-control input {
+  padding-top: 0;
+  padding-bottom: 1px;
+}
+
+@media (max-width: 800px) {
+  .calculator-flow {
+    margin-bottom: 19px;
+    padding-right: 43px;
+  }
+
+  .field-group--household .select-control,
+  .field-group--income .income-control {
+    padding: 7px 10px 6px;
+  }
+}

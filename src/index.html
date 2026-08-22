@@ -51,9 +51,11 @@
           <div class="calculator-note">
             <span class="paper-tab">家計ノート</span>
             <span class="calculator-icon" aria-hidden="true">¥</span>
+            <p class="calculator-flow"><span>診断は2ステップ</span> 暮らしを選んで、毎月の手取りを入力します。</p>
             <div class="calculator-fields">
-              <div class="field-group">
-                <label for="household">いまの暮らしに近いもの</label>
+              <div class="field-group field-group--household">
+                <div class="field-heading"><span class="field-step" aria-hidden="true">1</span><label for="household">暮らしのタイプを選ぶ</label></div>
+                <p class="field-lead">いま一番近い状況を選んでください。</p>
                 <div class="select-control">
                   <select id="household" name="household" aria-describedby="household-help household-note">
                     <option value="single">ひとりで暮らす</option>
@@ -63,11 +65,12 @@
                     <option value="multi-generation">親世代と暮らす</option>
                   </select>
                 </div>
-                <p id="household-help" class="helper-text">迷ったら、いま一番近い暮らしを選んでください。</p>
+                <p id="household-help" class="helper-text">選ぶと、家計の目安とコメントが切り替わります。</p>
                 <p id="household-note" class="household-note" aria-live="polite"></p>
               </div>
-              <div class="field-group">
-                <label for="income">毎月の手取り収入</label>
+              <div class="field-group field-group--income">
+                <div class="field-heading"><span class="field-step" aria-hidden="true">2</span><label for="income">毎月の手取りを入力</label></div>
+                <p class="field-lead">ボーナスを除いた、毎月の世帯合計です。</p>
                 <div class="income-control">
                   <span>¥</span>
                   <input id="income" name="income" type="text" value="300000" inputmode="numeric" pattern="[0-9]*" aria-describedby="income-help" />
