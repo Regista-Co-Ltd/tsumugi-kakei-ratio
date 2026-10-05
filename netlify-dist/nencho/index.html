@@ -331,13 +331,13 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
         <span class="go">クリックで拡大 →</span>
       </button>
     </div>
-    <p class="exnote">記入例の金額は、下の自動計算の最初の入力例(年収480万円、配偶者のパート年収100万円、21歳の長男の年収150万円)と同じです。<br>個人番号の欄は空欄にしています。<br>様式は国税庁が公表している令和8年分です。</p>
+    <p class="exnote">記入例の金額は、年収480万円、配偶者のパート年収100万円、21歳の長男の年収150万円の場合の例です。<br>個人番号の欄は空欄にしています。<br>様式は国税庁が公表している令和8年分です。</p>
   </section>
 
   <section id="calc">
     <div class="sec-head">
       <h2>自動計算</h2>
-      <p>入力すると、結果がその場で変わります。<br>数字は入力例です。<br>ご自身の見込み額に書き換えてください。</p>
+      <p>金額を入力すると、試算結果に自動で反映されます。<br>ご自身の見込み額を入れてください。</p>
     </div>
     <div class="calc">
       <form class="inputs" id="calc-form" onsubmit="return false" autocomplete="off">
@@ -345,12 +345,11 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
           <legend>収入と税金</legend>
           <div class="grid2">
             <label for="in-salary">給与等の収入金額(1年分の見込み)
-              <span class="money"><input type="text" id="in-salary" class="money-in" inputmode="numeric" value="4800000"><span>円</span></span></label>
+              <span class="money"><input type="text" id="in-salary" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="in-withheld">源泉徴収された税額(1年分の見込み)
-              <span class="money"><input type="text" id="in-withheld" class="money-in" inputmode="numeric" value="45000"><span>円</span></span></label>
+              <span class="money"><input type="text" id="in-withheld" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
           </div>
           <p class="hint">給与と賞与の総額(税引き前)を入れます。<br>源泉徴収税額は、給与明細の「所得税」の合計です。</p>
-          <p class="example">入力例です</p>
         </fieldset>
 
         <fieldset>
@@ -366,12 +365,12 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
 
         <fieldset>
           <legend>配偶者</legend>
-          <label class="chk" for="sp-on"><input type="checkbox" id="sp-on" checked>生計が同じ配偶者がいる</label>
+          <label class="chk" for="sp-on"><input type="checkbox" id="sp-on">生計が同じ配偶者がいる</label>
           <div id="sp-box" class="grid2">
             <label for="sp-mode">入力する金額
               <select id="sp-mode"><option value="kyuyo">給与収入(年収)</option><option value="shotoku">合計所得金額</option></select></label>
             <label for="sp-amt">配偶者の金額
-              <span class="money"><input type="text" id="sp-amt" class="money-in" inputmode="numeric" value="1000000"><span>円</span></span></label>
+              <span class="money"><input type="text" id="sp-amt" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="sp-dis">障害者区分
               <select id="sp-dis"><option value="0">なし</option><option value="270000">障害者(27万円)</option><option value="400000">特別障害者(40万円)</option><option value="750000">同居特別障害者(75万円)</option></select></label>
             <label class="chk" for="sp-elder" style="align-self:end"><input type="checkbox" id="sp-elder">70歳以上</label>
@@ -389,17 +388,17 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
           <legend>控除される支出(1年分)</legend>
           <div class="grid2">
             <label for="in-shaho">社会保険料(給与天引き分を含む)
-              <span class="money"><input type="text" id="in-shaho" class="money-in" inputmode="numeric" value="720000"><span>円</span></span></label>
+              <span class="money"><input type="text" id="in-shaho" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="in-shokibo">iDeCo・小規模企業共済の掛金
               <span class="money"><input type="text" id="in-shokibo" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="in-quake">地震保険料
-              <span class="money"><input type="text" id="in-quake" class="money-in" inputmode="numeric" value="12000"><span>円</span></span></label>
+              <span class="money"><input type="text" id="in-quake" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="in-loan">住宅ローン控除額(税額から引く分)
               <span class="money"><input type="text" id="in-loan" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
           </div>
           <div class="grid2">
             <label for="in-gen-new">一般生命保険料(新契約)
-              <span class="money"><input type="text" id="in-gen-new" class="money-in" inputmode="numeric" value="60000"><span>円</span></span></label>
+              <span class="money"><input type="text" id="in-gen-new" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="in-gen-old">一般生命保険料(旧契約)
               <span class="money"><input type="text" id="in-gen-old" class="money-in" inputmode="numeric" value="0"><span>円</span></span></label>
             <label for="in-care">介護医療保険料(新契約)
@@ -733,7 +732,6 @@ function compute(p) {
 
   Array.prototype.slice.call(document.querySelectorAll('.inputs > fieldset .money-in')).forEach(bindMoney);
   ['in-single', 'in-selfdis', 'in-student', 'sp-on', 'sp-mode', 'sp-dis', 'sp-elder'].forEach(function (id) { $(id).addEventListener('change', recalc); });
-  addRow({ type: 's19', mode: 'kyuyo', amt: 1500000, dis: 0 });
   Array.prototype.slice.call(document.querySelectorAll('.money-in')).forEach(function (el) { var n = num(el.value); el.value = n.toLocaleString('ja-JP'); });
   /* mobile summary bar: jump to result, hide while result is on screen */
   var mb = $('minibar'), resEl = $('result');
