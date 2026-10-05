@@ -288,7 +288,7 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
         <li><div><strong>16歳未満の扶養親族(住民税の欄)</strong>16歳未満の子は所得税の扶養控除はありませんが、住民税のために用紙の下の欄に書きます。</div></li>
         <li><div><strong>異動月日及び事由</strong>今年の途中で結婚、出産、就職、離別などがあった場合は、ここに日付と理由を書きます。</div></li>
       </ol>
-      <p class="tip"><b>ポイント</b> 今年(令和8年)の途中で結婚や出産などがあった人は、「異動月日及び事由」の欄に日付と理由を書きます。来年分(令和9年分)の用紙は、会社から別に配られます。</p>
+      <p class="tip"><b>ポイント</b> この用紙は令和8年分です。来年分(令和9年分)の用紙は、会社から別に配られます。</p>
     </div>
 
     <div class="panel" role="tabpanel" id="p-jutaku" aria-labelledby="tab-jutaku" hidden>
@@ -331,13 +331,13 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
         <span class="go">クリックで拡大 →</span>
       </button>
     </div>
-    <p class="exnote">記入例の金額は、下の自動計算の初めの入力例(年収480万円、配偶者のパート年収100万円、21歳の長男の年収150万円)と同じです。個人番号の欄は空欄にしています。様式は国税庁が公表している令和8年分です。</p>
+    <p class="exnote">記入例の金額は、下の自動計算の最初の入力例(年収480万円、配偶者のパート年収100万円、21歳の長男の年収150万円)と同じです。個人番号の欄は空欄にしています。様式は国税庁が公表している令和8年分です。</p>
   </section>
 
   <section id="calc">
     <div class="sec-head">
       <h2>自動計算</h2>
-      <p>入力すると、右の結果がその場で変わります。数字は入力例です。ご自身の見込み額に書き換えてください。</p>
+      <p>入力すると、結果がその場で変わります。数字は入力例です。ご自身の見込み額に書き換えてください。</p>
     </div>
     <div class="calc">
       <form class="inputs" id="calc-form" onsubmit="return false" autocomplete="off">
@@ -713,7 +713,7 @@ function compute(p) {
     L += row('課税所得金額(1,000円未満切り捨て)', yen(r.taxable), 'key');
     L += row('算出所得税額', yen(r.base));
     if (r.loan > 0) L += row('住宅ローン控除', '-' + yen(r.loan), 'sub');
-    L += row('年調年税額(復興特別所得税2.1%を含む)', yen(r.annual), 'key');
+    L += row('年末調整後の税額(復興特別所得税2.1%を含む)', yen(r.annual), 'key');
     L += row('源泉徴収された税額', yen(gather().withheld));
     L += row(d >= 0 ? '差引 還付額' : '差引 不足額', yen(Math.abs(d)), 'key');
     $('r-ledger').innerHTML = L;
