@@ -58,6 +58,8 @@ p { margin: 0; }
 a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--coral); }
 a:hover { color: var(--accent); }
 :focus-visible { outline: 3px solid rgba(217,113,97,.42); outline-offset: 3px; border-radius: 4px; }
+.hero { display: block; width: 100%; height: auto; border-radius: 3px; box-shadow: 9px 10px 0 #F1E4D7; margin: 0 0 40px; max-width: calc(100% - 9px); }
+header.top h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } /* 見出しは画像に含まれるため、文字は読み上げ用に残す */
 .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .13em; color: var(--accent); font-weight: 700; }
 .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
 .lede { max-width: 38em; color: var(--muted); margin-top: 14px; }
@@ -221,6 +223,7 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
 <body>
 <div class="brand"><a href="/" style="border:0"><img src="/nencho/img/logo.webp" alt="" width="36" height="36"><span>わが家の<br>家計バランス診断</span></a><a class="back" href="/">診断ページへ</a></div>
 <div class="wrap">
+  <img class="hero" src="/nencho/img/header.jpg" width="2103" height="748" alt="年末調整ガイド 書き方・必要書類・控除をやさしく解説">
   <header class="top">
     <div>
       <p class="eyebrow">令和8年(2026年)分</p>
