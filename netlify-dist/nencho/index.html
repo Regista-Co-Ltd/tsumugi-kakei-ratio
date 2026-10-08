@@ -78,6 +78,18 @@ section { padding-block: 44px 8px; scroll-margin-top: 12px; }
 .sec-head { display: grid; gap: 6px; margin-bottom: 20px; }
 .sec-head p { color: var(--muted); max-width: 42em; }
 
+/* 変更点 */
+.chg { display: grid; gap: 14px; margin-bottom: 18px; }
+.chg-row { background: var(--surface); border: 1px solid #EBDDD1; border-radius: 2px; padding: 14px 16px 12px; display: grid; gap: 8px; }
+.chg-row h3 { font-size: 16px; }
+.chg-ba { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.chg-ba > div { padding: 10px 12px; border-radius: 2px; font-size: 14px; line-height: 1.7; }
+.chg-ba span { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; margin-bottom: 2px; }
+.chg-b { background: #F4F1EA; color: var(--muted); }
+.chg-a { background: var(--sage-soft); color: var(--ink); font-weight: 700; }
+.chg-a span { color: #3F5F54; }
+.chg-note { font-size: 13px; color: var(--muted); }
+@media (max-width: 640px) { .chg-ba { grid-template-columns: minmax(0, 1fr); } }
 /* tabs */
 .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
 .tab { font: inherit; font-size: 14px; font-weight: 500; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); padding: 8px 14px; cursor: pointer; border-radius: 3px 3px 0 0; min-width: 0; text-align: left; }
@@ -237,9 +249,26 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
       <div><dt>精算のタイミング</dt><dd>12月の年末調整<small>1〜11月の天引きは変わりません</small></dd></div>
     </dl>
     <nav class="nav" aria-label="ページ内の移動">
-      <a href="#guide">書類の書き方</a><a href="#examples">記入例</a><a href="#calc">自動計算</a><a href="#faq">よくある質問</a>
+      <a href="#changes">今年の変更点</a><a href="#guide">書類の書き方</a><a href="#examples">記入例</a><a href="#calc">自動計算</a><a href="#faq">よくある質問</a>
     </nav>
   </header>
+
+  <section id="changes">
+    <div class="sec-head">
+      <h2>2026年(令和8年分)からの変更点</h2>
+      <p>令和7年分と比べて、何が変わったかをまとめました。<br>所得税の年末調整に関する変更です。</p>
+    </div>
+    <div class="chg">
+      <div class="chg-row"><h3>基礎控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得489万円以下:最大95万円<br>489万円超655万円以下:63万円<br>655万円超2,350万円以下:58万円</div><div class="chg-a"><span>令和8年分</span>489万円以下:最大104万円<br>489万円超655万円以下:67万円<br>655万円超2,350万円以下:62万円</div></div><p class="chg-note">本則が58万円から62万円に上がり、特例の上乗せも増えました(令和8・9年分)。</p></div>
+      <div class="chg-row"><h3>給与所得控除の最低額</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>65万円<br>(給与収入190万円以下)</div><div class="chg-a"><span>令和8年分</span>74万円<br>(給与収入220万円以下)</div></div><p class="chg-note">本則69万円に、令和8・9年分の特例5万円が加わります。</p></div>
+      <div class="chg-row"><h3>扶養親族・配偶者控除の所得要件</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得58万円以下<br>(給与だけなら年収123万円以下)</div><div class="chg-a"><span>令和8年分</span>合計所得62万円以下<br>(給与だけなら年収136万円以下)</div></div><p class="chg-note">同一生計配偶者、ひとり親の子も同じ基準です。</p></div>
+      <div class="chg-row"><h3>配偶者特別控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>配偶者の合計所得<br>58万円超133万円以下</div><div class="chg-a"><span>令和8年分</span>配偶者の合計所得<br>62万円超133万円以下</div></div><p class="chg-note">上の限度(133万円)は変わりません。</p></div>
+      <div class="chg-row"><h3>特定親族特別控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>19〜22歳の子などの所得<br>58万円超123万円以下</div><div class="chg-a"><span>令和8年分</span>19〜22歳の子などの所得<br>62万円超123万円以下</div></div><p class="chg-note">給与だけなら年収136万円超197万円以下が対象です。</p></div>
+      <div class="chg-row"><h3>勤労学生控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得85万円以下<br>(給与だけなら年収150万円以下)</div><div class="chg-a"><span>令和8年分</span>合計所得89万円以下<br>(給与だけなら年収163万円以下)</div></div><p class="chg-note">控除額は27万円のままです。</p></div>
+      <div class="chg-row"><h3>生命保険料控除(23歳未満の扶養親族がいる人)</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>一般生命保険料(新契約)<br>上限4万円</div><div class="chg-a"><span>令和8年分</span>一般生命保険料(新契約)<br>上限6万円</div></div><p class="chg-note">令和8・9年分の特例です。3つの合計の上限12万円は変わりません。</p></div>
+    </div>
+    <div class="tip"><b>ほかの変更</b> 提出する書類にも変更があります。<br>扶養控除等申告書に「源泉控除対象親族」の欄ができ、保険料控除申告書には23歳未満の扶養親族の欄が加わりました。<br>1〜11月の毎月の源泉徴収は改正前のままです。<br>改正は12月の年末調整でまとめて精算され、新しい源泉徴収税額表は令和9年分(2027年1月)から使います。<br>住民税への反映は、令和9年度分からです。</div>
+  </section>
 
   <section id="guide">
     <div class="sec-head">
