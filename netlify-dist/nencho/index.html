@@ -104,7 +104,7 @@ section { padding-block: 44px 8px; scroll-margin-top: 12px; }
 ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
 ol.steps li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px dashed #D7DDD0; }
 ol.steps li::before { content: counter(s); font-family: var(--font-display); font-weight: 900; color: #fff; background: var(--coral); width: 24px; height: 24px; border-radius: 50%; font-size: 13px; line-height: 24px; text-align: center; margin-top: 3px; }
-ol.steps strong { display: inline-block; background: var(--sage-soft); color: #3F5F54; padding: 0 8px; border-radius: 2px; font-weight: 700; margin-right: 2px; }
+ol.steps strong { display: table; margin-bottom: 4px; background: var(--sage-soft); color: #3F5F54; padding: 0 8px; border-radius: 2px; font-weight: 700; }
 .tip { border: 1px dashed #EFC8BF; padding: 10px 14px; background: #FFF7ED; font-size: 14px; box-shadow: 5px 6px 0 rgba(255,239,225,.9); }
 .tip b { color: var(--accent); }
 
