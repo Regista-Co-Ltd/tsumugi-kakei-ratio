@@ -79,8 +79,8 @@ section { padding-block: 44px 8px; scroll-margin-top: 12px; }
 .sec-head p { color: var(--muted); max-width: 42em; }
 
 /* 変更点 */
-.chg { display: grid; gap: 14px; margin-bottom: 18px; }
-.chg-row { background: var(--surface); border: 1px solid #EBDDD1; border-radius: 2px; padding: 14px 16px 12px; display: grid; gap: 8px; }
+.chg-row { display: grid; gap: 8px; padding-top: 14px; border-top: 1px dashed #D7DDD0; }
+.chg-row:first-child { padding-top: 0; border-top: 0; }
 .chg-row h3 { font-size: 16px; }
 .chg-ba { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
 .chg-ba > div { padding: 10px 12px; border-radius: 2px; font-size: 14px; line-height: 1.7; }
@@ -258,16 +258,33 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
       <h2>2026年(令和8年分)からの変更点</h2>
       <p>令和7年分と比べて、何が変わったかをまとめました。<br>所得税の年末調整に関する変更です。</p>
     </div>
-    <div class="chg">
-      <div class="chg-row"><h3>基礎控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得489万円以下:最大95万円<br>489万円超655万円以下:63万円<br>655万円超2,350万円以下:58万円</div><div class="chg-a"><span>令和8年分</span>489万円以下:最大104万円<br>489万円超655万円以下:67万円<br>655万円超2,350万円以下:62万円</div></div><p class="chg-note">本則が58万円から62万円に上がり、特例の上乗せも増えました(令和8・9年分)。</p></div>
-      <div class="chg-row"><h3>給与所得控除の最低額</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>65万円<br>(給与収入190万円以下)</div><div class="chg-a"><span>令和8年分</span>74万円<br>(給与収入220万円以下)</div></div><p class="chg-note">本則69万円に、令和8・9年分の特例5万円が加わります。</p></div>
-      <div class="chg-row"><h3>扶養親族・配偶者控除の所得要件</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得58万円以下<br>(給与だけなら年収123万円以下)</div><div class="chg-a"><span>令和8年分</span>合計所得62万円以下<br>(給与だけなら年収136万円以下)</div></div><p class="chg-note">同一生計配偶者、ひとり親の子も同じ基準です。</p></div>
-      <div class="chg-row"><h3>配偶者特別控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>配偶者の合計所得<br>58万円超133万円以下</div><div class="chg-a"><span>令和8年分</span>配偶者の合計所得<br>62万円超133万円以下</div></div><p class="chg-note">上の限度(133万円)は変わりません。</p></div>
-      <div class="chg-row"><h3>特定親族特別控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>19〜22歳の子などの所得<br>58万円超123万円以下</div><div class="chg-a"><span>令和8年分</span>19〜22歳の子などの所得<br>62万円超123万円以下</div></div><p class="chg-note">給与だけなら年収136万円超197万円以下が対象です。</p></div>
-      <div class="chg-row"><h3>勤労学生控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得85万円以下<br>(給与だけなら年収150万円以下)</div><div class="chg-a"><span>令和8年分</span>合計所得89万円以下<br>(給与だけなら年収163万円以下)</div></div><p class="chg-note">控除額は27万円のままです。</p></div>
-      <div class="chg-row"><h3>生命保険料控除(23歳未満の扶養親族がいる人)</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>一般生命保険料(新契約)<br>上限4万円</div><div class="chg-a"><span>令和8年分</span>一般生命保険料(新契約)<br>上限6万円</div></div><p class="chg-note">令和8・9年分の特例です。3つの合計の上限12万円は変わりません。</p></div>
+    <div class="tabs" role="tablist" aria-label="変更点の種類">
+      <button class="tab" role="tab" id="ctab-kihon" aria-controls="c-kihon" aria-selected="true" data-tab="kihon">基礎控除・給与所得控除</button>
+      <button class="tab" role="tab" id="ctab-kazoku" aria-controls="c-kazoku" aria-selected="false" data-tab="kazoku">扶養・配偶者・特定親族</button>
+      <button class="tab" role="tab" id="ctab-hoken2" aria-controls="c-hoken2" aria-selected="false" data-tab="hoken2">勤労学生・保険料控除</button>
+      <button class="tab" role="tab" id="ctab-sonota" aria-controls="c-sonota" aria-selected="false" data-tab="sonota">書類・時期</button>
     </div>
-    <div class="tip"><b>ほかの変更</b> 提出する書類にも変更があります。<br>扶養控除等申告書に「源泉控除対象親族」の欄ができ、保険料控除申告書には23歳未満の扶養親族の欄が加わりました。<br>1〜11月の毎月の源泉徴収は改正前のままです。<br>改正は12月の年末調整でまとめて精算され、新しい源泉徴収税額表は令和9年分(2027年1月)から使います。<br>住民税への反映は、令和9年度分からです。</div>
+    <div class="panel" role="tabpanel" id="c-kihon" aria-labelledby="ctab-kihon">
+        <div class="chg-row"><h3>基礎控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得489万円以下:最大95万円<br>489万円超655万円以下:63万円<br>655万円超2,350万円以下:58万円</div><div class="chg-a"><span>令和8年分</span>489万円以下:最大104万円<br>489万円超655万円以下:67万円<br>655万円超2,350万円以下:62万円</div></div><p class="chg-note">本則が58万円から62万円に上がり、特例の上乗せも増えました(令和8・9年分)。</p></div>
+        <div class="chg-row"><h3>給与所得控除の最低額</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>65万円<br>(給与収入190万円以下)</div><div class="chg-a"><span>令和8年分</span>74万円<br>(給与収入220万円以下)</div></div><p class="chg-note">本則69万円に、令和8・9年分の特例5万円が加わります。</p></div>
+    </div>
+    <div class="panel" role="tabpanel" id="c-kazoku" aria-labelledby="ctab-kazoku" hidden>
+        <div class="chg-row"><h3>扶養親族・配偶者控除の所得要件</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得58万円以下<br>(給与だけなら年収123万円以下)</div><div class="chg-a"><span>令和8年分</span>合計所得62万円以下<br>(給与だけなら年収136万円以下)</div></div><p class="chg-note">同一生計配偶者、ひとり親の子も同じ基準です。</p></div>
+        <div class="chg-row"><h3>配偶者特別控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>配偶者の合計所得<br>58万円超133万円以下</div><div class="chg-a"><span>令和8年分</span>配偶者の合計所得<br>62万円超133万円以下</div></div><p class="chg-note">上の限度(133万円)は変わりません。</p></div>
+        <div class="chg-row"><h3>特定親族特別控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>19〜22歳の子などの所得<br>58万円超123万円以下</div><div class="chg-a"><span>令和8年分</span>19〜22歳の子などの所得<br>62万円超123万円以下</div></div><p class="chg-note">給与だけなら年収136万円超197万円以下が対象です。</p></div>
+    </div>
+    <div class="panel" role="tabpanel" id="c-hoken2" aria-labelledby="ctab-hoken2" hidden>
+        <div class="chg-row"><h3>勤労学生控除</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>合計所得85万円以下<br>(給与だけなら年収150万円以下)</div><div class="chg-a"><span>令和8年分</span>合計所得89万円以下<br>(給与だけなら年収163万円以下)</div></div><p class="chg-note">控除額は27万円のままです。</p></div>
+        <div class="chg-row"><h3>生命保険料控除(23歳未満の扶養親族がいる人)</h3><div class="chg-ba"><div class="chg-b"><span>令和7年分</span>一般生命保険料(新契約)<br>上限4万円</div><div class="chg-a"><span>令和8年分</span>一般生命保険料(新契約)<br>上限6万円</div></div><p class="chg-note">令和8・9年分の特例です。3つの合計の上限12万円は変わりません。</p></div>
+    </div>
+    <div class="panel" role="tabpanel" id="c-sonota" aria-labelledby="ctab-sonota" hidden>
+        <ol class="steps">
+          <li><div><strong>提出書類</strong>扶養控除等申告書に「源泉控除対象親族」の欄ができました。<br>保険料控除申告書には、23歳未満の扶養親族の欄が加わりました。</div></li>
+          <li><div><strong>毎月の源泉徴収</strong>1〜11月の毎月の源泉徴収は、改正前のままです。<br>新しい源泉徴収税額表は、令和9年分(2027年1月)から使います。</div></li>
+          <li><div><strong>12月の年末調整</strong>改正は、12月の年末調整でまとめて精算されます。</div></li>
+          <li><div><strong>住民税</strong>住民税への反映は、令和9年度分からです。</div></li>
+        </ol>
+    </div>
   </section>
 
   <section id="guide">
@@ -650,26 +667,31 @@ function compute(p) {
   var yen = function (n) { return (n < 0 ? '-' : '') + Math.abs(n).toLocaleString('ja-JP') + '円'; };
   var rowCount = 0;
 
-  /* tabs */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-  function showTab(name) {
-    tabs.forEach(function (t) {
-      var on = t.getAttribute('data-tab') === name;
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      t.tabIndex = on ? 0 : -1;
-      $('p-' + t.getAttribute('data-tab')).hidden = !on;
+  /* tabs (書類の書き方・変更点のそれぞれで独立して動く) */
+  function initTabs(group, initial) {
+    var tabs = Array.prototype.slice.call(group.querySelectorAll('.tab'));
+    function showTab(name) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === name;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        $(t.getAttribute('aria-controls')).hidden = !on;
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { showTab(t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var j = e.key === 'ArrowRight' ? i + 1 : (e.key === 'ArrowLeft' ? i - 1 : -1);
+        if (j < 0) return;
+        j = (j + tabs.length) % tabs.length; tabs[j].focus(); showTab(tabs[j].getAttribute('data-tab'));
+      });
     });
+    showTab(initial || tabs[0].getAttribute('data-tab'));
   }
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { showTab(t.getAttribute('data-tab')); });
-    t.addEventListener('keydown', function (e) {
-      var j = e.key === 'ArrowRight' ? i + 1 : (e.key === 'ArrowLeft' ? i - 1 : -1);
-      if (j < 0) return;
-      j = (j + tabs.length) % tabs.length; tabs[j].focus(); showTab(tabs[j].getAttribute('data-tab'));
-    });
-  });
   var h = (location.hash || '').replace('#', '');
-  showTab(['kiso', 'hoken', 'fuyo', 'jutaku'].indexOf(h) >= 0 ? h : 'kiso');
+  var groups = document.querySelectorAll('.tabs');
+  initTabs(groups[0], null);
+  initTabs(groups[1], ['kiso', 'hoken', 'fuyo', 'jutaku'].indexOf(h) >= 0 ? h : null);
 
   /* money inputs */
   function bindMoney(el) {
