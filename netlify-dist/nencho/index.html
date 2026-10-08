@@ -820,16 +820,26 @@ function compute(p) {
     img.style.width = w + 'px';
     box.scrollTop = 0;
   }
+  var pushed = false; /* 記入例を開いたとき履歴に1つ積み、ブラウザの戻るで閉じられるようにする */
   function open(name, from) {
     cur = name; page = 0; zoom = 0; opener = from || null;
     v.hidden = false; document.body.style.overflow = 'hidden';
     if (box.clientWidth < 600) zoom = 250;
+    if (!pushed) { try { history.pushState({ nenchoViewer: 1 }, '', location.href); pushed = true; } catch (e) {} }
     render(); $('v-close').focus();
   }
-  function close() {
+  function hide() {
     v.hidden = true; document.body.style.overflow = '';
     if (opener && opener.focus) opener.focus();
   }
+  function close() {
+    if (pushed) { history.back(); } /* 戻る操作と同じ流れ。popstateで閉じる */
+    else hide();
+  }
+  window.addEventListener('popstate', function () {
+    pushed = false;
+    if (!v.hidden) hide();
+  });
   function step(d) { cur = ORDER[(ORDER.indexOf(cur) + d + ORDER.length) % ORDER.length]; page = 0; zoom = box.clientWidth < 600 ? 250 : 0; render(); }
   function setZoom(z) { zoom = Math.max(0, Math.min(400, z)); render(); }
   Array.prototype.slice.call(document.querySelectorAll('[data-open]')).forEach(function (b) {
