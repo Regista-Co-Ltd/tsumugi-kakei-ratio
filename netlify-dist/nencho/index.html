@@ -149,10 +149,26 @@ dl.ledger dt { min-width: 0; }
 dl.ledger dd { margin: 0; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 dl.ledger > div.key { font-weight: 700; border-top: 2px solid var(--sage); }
 .fillin { border: 1px dashed #EFC8BF; background: #FFF7ED; padding: 12px 14px; display: grid; gap: 4px; box-shadow: 5px 6px 0 rgba(255,239,225,.9); }
+.fill-hint { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 4px; }
+.fillin .fgroup { background: transparent; border: 0; border-top: 1px dashed #EFC8BF; padding: 0; margin: 0; }
+.fillin .fgroup + .fgroup { margin-top: 0; }
+.fillin .fgroup summary { padding: 9px 0; font-size: 13.5px; font-family: var(--font-body); display: flex; justify-content: space-between; gap: 8px; }
+.fillin .fgroup summary small { font-weight: 400; color: var(--muted); font-size: 12px; white-space: nowrap; margin-left: auto; padding-right: 6px; }
+.fillin .fgroup ul { padding-bottom: 8px; }
+.fillin li { align-items: center; }
+.fillin li .fl { flex: 1 1 auto; min-width: 0; }
+.fillin li .fv { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+.loc { all: unset; box-sizing: border-box; cursor: pointer; flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; color: var(--accent); }
+.loc:hover { background: #FFE6DC; }
+.loc:focus-visible { outline: 3px solid rgba(217,113,97,.42); outline-offset: 1px; }
+.loc svg { width: 18px; height: 18px; }
+.vimgwrap { position: relative; margin-inline: auto; line-height: 0; }
+.vhl { position: absolute; border: 3px solid #FF8A00; background: rgba(255,152,0,.2); border-radius: 4px; box-shadow: 0 0 0 3px rgba(255,255,255,.75); pointer-events: none; animation: hlpulse 1.4s ease-in-out 3; }
+@keyframes hlpulse { 50% { background: rgba(255,152,0,.42); } }
+@media (prefers-reduced-motion: reduce) { .vhl { animation: none; } }
 .fillin h4 { margin: 0 0 4px; font-family: var(--font-display); font-size: 15px; font-weight: 900; }
 .fillin ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; font-size: 13.5px; }
 .fillin li { display: flex; justify-content: space-between; gap: 10px; }
-.fillin li span:last-child { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
 .warns { display: grid; gap: 6px; }
 .warns p { border-left: 3px solid var(--warn); padding: 6px 10px; background: #FFF7ED; font-size: 13px; }
 .minibar { font: inherit; border: 0; width: calc(100% + 32px); text-align: left; cursor: pointer; position: sticky; bottom: env(safe-area-inset-bottom, 0px); display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #3B4A42; color: #F9F4E8; padding: 10px 16px; margin-inline: -16px; font-size: 14px; z-index: 5; }
@@ -469,7 +485,13 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
         </div>
         <div class="warns" id="r-warns"></div>
         <dl class="ledger" id="r-ledger"></dl>
-        <div class="fillin"><h4>申告書に書く数字</h4><ul id="r-fill"></ul></div>
+        <div class="fillin">
+          <h4>申告書に書く数字</h4>
+          <p class="fill-hint">書類の名前を押すと、書く数字が開きます。<br>横のマークを押すと、記入例の画像で書く欄に印が付きます。</p>
+          <details class="fgroup" id="fg-kiso"><summary>基礎控除・配偶者・特定親族の申告書<small id="fgc-kiso"></small></summary><ul id="r-fill-kiso"></ul></details>
+          <details class="fgroup" id="fg-hoken"><summary>保険料控除申告書<small id="fgc-hoken"></small></summary><ul id="r-fill-hoken"></ul></details>
+          <details class="fgroup" id="fg-fuyo"><summary>扶養控除等(異動)申告書<small id="fgc-fuyo"></small></summary><ul id="r-fill-fuyo"></ul></details>
+        </div>
       </aside>
     </div>
     <button type="button" class="minibar" id="minibar" aria-label="結果の詳細へ移動"><span id="mb-label">還付(目安)</span><b id="mb-amt">0円</b><span class="go">詳しい結果 ↓</span></button>
@@ -516,7 +538,7 @@ footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
     <button type="button" class="vbtn vclose" id="v-close">閉じる</button>
   </div>
   <div class="vscroll" id="v-scroll">
-    <img id="v-img" alt="" src="">
+    <div class="vimgwrap" id="v-wrap"><img id="v-img" alt="" src=""></div>
     <p class="vcap" id="v-cap"></p>
     <div class="vgroup vstep-bottom" role="group" aria-label="書類の切り替え">
       <button type="button" class="vbtn" data-step="-1">前の書類</button>
@@ -739,6 +761,7 @@ function compute(p) {
 
   function row(label, value, cls) { return '<div' + (cls ? ' class="' + cls + '"' : '') + '><dt>' + label + '</dt><dd>' + value + '</dd></div>'; }
 
+  function setHTML(el, h) { if (el._h !== h) { el._h = h; el.innerHTML = h; } } /* 同じ内容なら描き直さない(タップ中のボタンが消えるのを防ぐ) */
   function recalc() {
     $('sp-box').hidden = !$('sp-on').checked;
     var r = compute(gather()), it = r.items;
@@ -770,18 +793,25 @@ function compute(p) {
     L += row('源泉徴収された税額', yen(gather().withheld));
     L += row(d >= 0 ? '差引 還付額' : '差引 不足額', yen(Math.abs(d)), 'key');
     $('r-ledger').innerHTML = L;
-    /* fill-in */
-    var F = '';
-    F += '<li><span>給与所得控除後の給与等の金額</span><span>' + yen(r.sIncome) + '</span></li>';
-    F += '<li><span>合計所得金額の見積額</span><span>' + yen(r.selfIncome) + '</span></li>';
-    F += '<li><span>基礎控除の額</span><span>' + yen(it.basic) + '</span></li>';
-    if (r.sp.kind !== 'none') F += '<li><span>' + r.sp.kind + '</span><span>' + yen(it.spouse) + '</span></li>';
-    if (it.tokutei > 0) F += '<li><span>特定親族特別控除(合計)</span><span>' + yen(it.tokutei) + '</span></li>';
-    if (r.nFuyo > 0) F += '<li><span>控除対象扶養親族(16歳以上)の人数</span><span>' + r.deps.filter(function (x) { return x.eligible && x.fuyo > 0; }).length + '人</span></li>';
-    if (r.adj > 0) F += '<li><span>所得金額調整控除の額</span><span>' + yen(r.adj) + '</span></li>';
-    F += '<li><span>生命保険料控除(一般/介護医療/個人年金)</span><span>' + yen(r.gen) + ' / ' + yen(r.care) + ' / ' + yen(r.pen) + '</span></li>';
-    F += '<li><span>地震保険料控除の額</span><span>' + yen(it.quake) + '</span></li>';
-    $('r-fill').innerHTML = F;
+    /* fill-in: 書類ごとに分けて、各行に「場所を見る」マークを付ける */
+    var PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+    var fr = function (label, val, loc) {
+      return '<li><span class="fl">' + label + '</span><span class="fv">' + val + '</span><button type="button" class="loc" data-loc="' + loc + '" aria-label="' + label.replace(/<[^>]*>/g, '') + 'を書く場所を、記入例で見る" title="場所を見る">' + PIN + '</button></li>';
+    };
+    var K = '', H = '', Fy = '', nK = 0, nH = 0, nF = 0;
+    K += fr('給与所得控除後の給与等の金額', yen(r.sIncome), 'k_shotoku'); nK++;
+    K += fr('合計所得金額の見積額', yen(r.selfIncome), 'k_gokei'); nK++;
+    K += fr('基礎控除の額', yen(it.basic), 'k_kiso'); nK++;
+    if (r.sp.kind !== 'none') { K += fr(r.sp.kind, yen(it.spouse), 'k_haigusha'); nK++; }
+    if (it.tokutei > 0) { K += fr('特定親族特別控除(合計)', yen(it.tokutei), 'k_tokutei'); nK++; }
+    if (r.adj > 0) { K += fr('所得金額調整控除の額', yen(r.adj), 'k_chosei'); nK++; }
+    H += fr('生命保険料控除(一般/介護医療/個人年金)', yen(r.gen) + ' / ' + yen(r.care) + ' / ' + yen(r.pen), 'h_life'); nH++;
+    H += fr('地震保険料控除の額', yen(it.quake), 'h_quake'); nH++;
+    if (r.nFuyo > 0) { Fy += fr('控除対象扶養親族(16歳以上)の人数', r.deps.filter(function (x) { return x.eligible && x.fuyo > 0; }).length + '人', 'f_b'); nF++; }
+    setHTML($('r-fill-kiso'), K); $('fgc-kiso').textContent = nK + '項目';
+    setHTML($('r-fill-hoken'), H); $('fgc-hoken').textContent = nH + '項目';
+    setHTML($('r-fill-fuyo'), Fy); $('fgc-fuyo').textContent = nF + '項目';
+    $('fg-fuyo').hidden = nF === 0;
   }
 
   Array.prototype.slice.call(document.querySelectorAll('.inputs > fieldset .money-in')).forEach(bindMoney);
@@ -797,6 +827,18 @@ function compute(p) {
 })();
 
 (function () {
+  var IW = 1988, IH = 1406; /* 表面画像の大きさ(印の位置の基準) */
+  var LOCS = {
+    k_shotoku: { form: 'kiso', rects: [[323, 296, 742, 392]], cap: '「給与所得」の「所得金額」の欄です。収入金額の欄には、給与と賞与の見込み総額を書きます。' },
+    k_gokei: { form: 'kiso', rects: [[517, 455, 742, 503]], cap: 'あなたの本年中の合計所得金額の見積額の欄です。' },
+    k_kiso: { form: 'kiso', rects: [[570, 643, 746, 738]], cap: '基礎控除の額の欄です。左の判定の表で、当てはまる行にチェックを付けます。' },
+    k_haigusha: { form: 'kiso', rects: [[1612, 665, 1842, 738]], cap: '配偶者控除の額の欄です。配偶者特別控除の場合は、その下の欄に書きます。' },
+    k_tokutei: { form: 'kiso', rects: [[1645, 940, 1860, 1082]], cap: '特定親族特別控除の額の欄です。' },
+    k_chosei: { form: 'kiso', rects: [[130, 1205, 1862, 1378]], cap: '所得金額調整控除申告書の欄です。当てはまる要件にチェックを付けます。' },
+    h_life: { form: 'hoken', rects: [[822, 598, 1098, 660], [822, 792, 1098, 855], [822, 1062, 1098, 1112]], cap: '一般は(イ)、介護医療は(ロ)、個人年金は(ハ)の欄に書きます。' },
+    h_quake: { form: 'hoken', rects: [[1662, 725, 1864, 792]], cap: '地震保険料控除額の欄です。' },
+    f_b: { form: 'fuyo', rects: [[105, 470, 842, 846]], cap: '源泉控除対象親族(B)の欄です。対象の家族を1人ずつ書きます。' }
+  };
   var FORMS = {
     kiso: { title: '基礎控除・配偶者・特定親族の申告書', src: ['/nencho/img/kiso-1.jpg', '/nencho/img/kiso-2.jpg'] },
     hoken: { title: '保険料控除申告書', src: ['/nencho/img/hoken-1.jpg', '/nencho/img/hoken-2.jpg'] },
@@ -805,26 +847,41 @@ function compute(p) {
   var ORDER = ['kiso', 'hoken', 'fuyo'];
   var $ = function (id) { return document.getElementById(id); };
   var v = $('viewer'), img = $('v-img'), box = $('v-scroll');
-  var cur = 'kiso', page = 0, zoom = 0, opener = null; /* zoom 0 = fit width, else percent of box width */
+  var cur = 'kiso', page = 0, zoom = 0, opener = null, loc = null; /* zoom 0 = fit width, else percent of box width */
   var CAPS = ['青い文字が記入例です。氏名や金額は架空の例です。小さい画面では、指で上下左右にスクロールできます。', '裏面は記入の説明です(国税庁の様式のままです)。小さい画面では、指で上下左右にスクロールできます。'];
   function render() {
     var f = FORMS[cur];
     $('v-title').textContent = f.title;
     img.src = f.src[page];
     img.alt = f.title + (page === 0 ? ' 記入例(表面)' : ' 説明(裏面)');
-    $('v-cap').textContent = CAPS[page];
+    $('v-cap').textContent = (loc && page === 0) ? LOCS[loc].cap : CAPS[page];
     $('v-p1').setAttribute('aria-pressed', page === 0 ? 'true' : 'false');
     $('v-p2').setAttribute('aria-pressed', page === 1 ? 'true' : 'false');
     $('v-fit').setAttribute('aria-pressed', zoom === 0 ? 'true' : 'false');
     var w = zoom === 0 ? Math.max(280, box.clientWidth - 32) : Math.round((box.clientWidth - 32) * zoom / 100);
     img.style.width = w + 'px';
-    box.scrollTop = 0;
+    var wrap = $('v-wrap'); wrap.style.width = w + 'px';
+    Array.prototype.slice.call(wrap.querySelectorAll('.vhl')).forEach(function (n) { n.remove(); });
+    box.scrollTop = 0; box.scrollLeft = 0;
+    if (loc && page === 0) {
+      LOCS[loc].rects.forEach(function (r) {
+        var d = document.createElement('div'); d.className = 'vhl';
+        d.style.left = (r[0] / IW * 100) + '%'; d.style.top = (r[1] / IH * 100) + '%';
+        d.style.width = ((r[2] - r[0]) / IW * 100) + '%'; d.style.height = ((r[3] - r[1]) / IH * 100) + '%';
+        wrap.appendChild(d);
+      });
+      var f = wrap.querySelector('.vhl');
+      if (f) { /* 印が見える位置まで動かす */
+        box.scrollTop = Math.max(0, f.offsetTop - box.clientHeight / 4);
+        box.scrollLeft = Math.max(0, f.offsetLeft - (box.clientWidth - f.offsetWidth) / 2);
+      }
+    }
   }
   var pushed = false; /* 記入例を開いたとき履歴に1つ積み、ブラウザの戻るで閉じられるようにする */
-  function open(name, from) {
-    cur = name; page = 0; zoom = 0; opener = from || null;
+  function open(name, from, locKey) {
+    cur = name; page = 0; zoom = 0; opener = from || null; loc = locKey || null;
     v.hidden = false; document.body.style.overflow = 'hidden';
-    if (box.clientWidth < 600) zoom = 250;
+    if (box.clientWidth < 600) zoom = locKey ? 200 : 250;
     if (!pushed) { try { history.pushState({ nenchoViewer: 1 }, '', location.href); pushed = true; } catch (e) {} }
     render(); $('v-close').focus();
   }
@@ -840,10 +897,14 @@ function compute(p) {
     pushed = false;
     if (!v.hidden) hide();
   });
-  function step(d) { cur = ORDER[(ORDER.indexOf(cur) + d + ORDER.length) % ORDER.length]; page = 0; zoom = box.clientWidth < 600 ? 250 : 0; render(); }
+  function step(d) { loc = null; cur = ORDER[(ORDER.indexOf(cur) + d + ORDER.length) % ORDER.length]; page = 0; zoom = box.clientWidth < 600 ? 250 : 0; render(); }
   function setZoom(z) { zoom = Math.max(0, Math.min(400, z)); render(); }
   Array.prototype.slice.call(document.querySelectorAll('[data-open]')).forEach(function (b) {
     b.addEventListener('click', function () { open(b.getAttribute('data-open'), b); });
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-loc]') : null;
+    if (b && LOCS[b.getAttribute('data-loc')]) open(LOCS[b.getAttribute('data-loc')].form, b, b.getAttribute('data-loc'));
   });
   $('v-close').addEventListener('click', close);
   $('v-p1').addEventListener('click', function () { page = 0; render(); });
